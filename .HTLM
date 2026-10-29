@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>QCM séismes et volcans</title>
+<style>
+body{font-family:system-ui,sans-serif;max-width:640px;margin:0 auto;padding:16px;line-height:1.5}
+.q{padding:14px 0;border-bottom:1px solid #ddd}
+.t{font-weight:600;margin:0 0 8px}
+button{display:block;width:100%;text-align:left;margin:4px 0;padding:8px 10px;font:inherit;border:1px solid #ccc;border-radius:8px;background:#fff;cursor:pointer}
+.ok{background:#e3f4d7;border-color:#7bb64a}
+.ko{background:#fbe2e2;border-color:#e07a7a}
+.ex{font-size:14px;color:#555;margin:6px 0 0}
+#sc{font-size:20px;font-weight:600}
+</style>
+</head>
+<body>
+<h1>QCM séismes et volcans</h1>
+<p>Score : <span id="sc">0 / 0</span></p>
+<div id="quiz"></div>
+<script>
+const Q=[
+["Les ondes sismiques prennent naissance…",["à l'épicentre","au foyer","à la dorsale"],1,"Le foyer est en profondeur ; l'épicentre est en surface, juste au-dessus."],
+["Au niveau d'une dorsale, l'océan…",["rétrécit","s'agrandit","ne change pas"],1,"Les plaques s'écartent et du nouveau plancher océanique se forme."],
+["En zone de subduction, l'océan…",["s'agrandit","rétrécit","ne change pas"],1,"La plaque océanique plonge dans le manteau et disparaît."],
+["Pourquoi la plaque océanique plonge-t-elle ?",["Elle est plus épaisse","Elle est plus dense","Elle est plus rapide"],1,"Plus dense, donc plus lourde : elle s'enfonce."],
+["Les zones sismiques et volcaniques délimitent…",["les continents","les plaques lithosphériques","les pays"],1,"Ce sont les limites des plaques, pas des continents."],
+["L'aléa, c'est…",["la possibilité qu'un séisme se produise","les personnes et bâtiments exposés","le nombre de victimes"],0,"L'enjeu, c'est ce qui est exposé. Risque = aléa + enjeu."],
+["Magnitude 9 dans une région sans habitants : le risque est…",["fort","faible","moyen"],1,"Aléa fort mais enjeu presque nul, donc risque faible."],
+["La plaque Cocos s'enfonce de 6,1 cm/an. En 100 ans ?",["61 cm","6,1 m","61 m"],1,"6,1 × 100 = 610 cm = 6,1 m."],
+["Pourquoi le Japon a-t-il de moins en moins de victimes ?",["Les séismes sont plus faibles","Meilleure prévention (parasismique, alertes)","Les plaques se sont arrêtées"],1,"L'aléa reste fort ; la vulnérabilité a baissé."],
+["Un séisme se produit quand…",["les tensions accumulées font casser les roches","un volcan explose","l'océan s'agrandit"],0,"Plaque bloquée, tensions accumulées, puis rupture brutale."]
+];
+let done=0,good=0;
+const z=document.getElementById('quiz'),sc=document.getElementById('sc');
+Q.forEach((q,i)=>{
+  const d=document.createElement('div');d.className='q';
+  d.innerHTML='<p class="t">'+(i+1)+'. '+q[0]+'</p>';
+  q[1].forEach((t,j)=>{
+    const b=document.createElement('button');b.textContent=t;
+    b.onclick=()=>{
+      if(d.dataset.a)return;d.dataset.a=1;done++;
+      d.querySelectorAll('button')[q[2]].classList.add('ok');
+      if(j===q[2])good++;else b.classList.add('ko');
+      const e=document.createElement('p');e.className='ex';
+      e.textContent=(j===q[2]?'Juste. ':'Faux. ')+q[3];d.appendChild(e);
+      sc.textContent=good+' / '+done;
+    };
+    d.appendChild(b);
+  });
+  z.appendChild(d);
+});
+</script>
+</body>
+</html>
